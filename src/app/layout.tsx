@@ -1,9 +1,9 @@
 import "~/styles/globals.css";
-
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
-
 import { TRPCReactProvider } from "~/trpc/react";
+import { Navbar } from "~/components/shared/Navbar";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -20,9 +20,18 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
+    <html lang="en" className={geist.variable}>
       <body>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <SessionProvider>
+          <TRPCReactProvider>
+            <Navbar />
+            <div>
+              <main className="container mx-auto max-w-6xl px-4 py-8 sm:px-6">
+                {children}
+              </main>
+            </div>
+          </TRPCReactProvider>
+        </SessionProvider>
       </body>
     </html>
   );
