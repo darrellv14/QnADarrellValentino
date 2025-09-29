@@ -46,7 +46,7 @@ export const CreatePostCard = () => {
       alert("Created Post!");
       form.reset();
 
-      await apiUtils.post.getAllPosts.invalidate();
+      await apiUtils.post.getPostPaginated.invalidate();
     },
   });
 

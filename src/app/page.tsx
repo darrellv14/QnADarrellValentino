@@ -1,5 +1,11 @@
 import { CreatePostCard } from "~/components/shared/CreatePostCard";
 import { HomePostList } from "~/components/shared/HomePostList";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home Page | Aspirasi Darrell",
+  description: "Home page dari aplikasi Aspirasi Darrell",
+};
 
 export default async function Home() {
   return (
@@ -11,7 +17,7 @@ export default async function Home() {
         </p>
       </div>
 
-      <div className="px-4 sm:px-0 space-y-8">
+      <div className="space-y-8 px-4 sm:px-0">
         <CreatePostCard />
         <HomePostList />
       </div>
