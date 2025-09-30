@@ -79,7 +79,7 @@ export const CreatePostCard = () => {
                   <AvatarImage src={session.user.image ?? ""} />
                 </Avatar>
 
-                <div className="w-full space-y-1.5">
+                <div className="w-full space-y-5">
                   <FormField
                     control={form.control}
                     name="title"
