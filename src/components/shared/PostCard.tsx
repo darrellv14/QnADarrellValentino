@@ -47,7 +47,7 @@ export const PostCard = (props: PostCardProps) => {
       </div>
       <Link href={postDetailUrl} className="group">
         <div className="space-y-1">
-          <h3 className="group-hover:text-destructive text-lg font-semibold">
+          <h3 className="group-hover:text-primary text-lg font-semibold">
             {props.title}
           </h3>
           <p className="text-sm">{props.description}</p>
