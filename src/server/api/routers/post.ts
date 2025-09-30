@@ -105,6 +105,11 @@ export const postRouter = createTRPCRouter({
           },
           createdAt: true,
           answeredAt: true,
+          _count: {
+            select: {
+              answers: true
+            }
+          }
         },
       });
 
@@ -114,10 +119,16 @@ export const postRouter = createTRPCRouter({
         const nextItem = posts.pop();
         nextCursor = nextItem?.id;
       }
+      
+      const formattedPosts = posts.map(post => ({
+        ...post,
+        totalComments: post._count.answers
+      }));
+      
       return {
         posts,
         nextCursor,
-      };
+      }
     }),
   markAsAnswered: protectedProcedure
     .input(
