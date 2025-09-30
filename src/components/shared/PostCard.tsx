@@ -28,7 +28,7 @@ export const PostCard = (props: PostCardProps) => {
           </Avatar>
           <div className="space-y-0.5">
             <Link href={"/profile/" + props.username}>
-              <p className="font-medium">{props.username}</p>
+              <p className="font-medium">{props.username?.slice(0, 13)}</p>
             </Link>
             <p className="text-muted-foreground text-sm">
               {props.createdDate.toLocaleDateString()}
