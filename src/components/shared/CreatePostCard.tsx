@@ -26,8 +26,8 @@ import { api } from "~/trpc/react";
 import { signIn, useSession } from "next-auth/react";
 
 const createPostFormSchema = z.object({
-  title: z.string().min(10, "Tanya yg bener woi!").max(100, "Maksimum 100 huruf aja wok!"),
-  description: z.string().min(50, "dikit amat nanya nya!").max(1000, "Gausah nyepam kocak"),
+  title: z.string().min(10, "Minimal 10 karakter yah dek!").max(100, "Maksimum 100 huruf aja wok!"),
+  description: z.string().min(25, "Minimal 25 karakter yah dek!").max(1000, "Gausah nyepam kocak"),
 });
 
 type CreatePostFormSchema = z.infer<typeof createPostFormSchema>;
