@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -16,7 +15,6 @@ export const postRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const { db, session } = ctx;
-
       const newPost = await db.post.create({
         data: {
           title: input.title,
@@ -29,7 +27,6 @@ export const postRouter = createTRPCRouter({
 
   getAllPosts: publicProcedure.query(async ({ ctx }) => {
     const { db } = ctx;
-
     const posts = await db.post.findMany({
       select: {
         id: true,
@@ -56,7 +53,6 @@ export const postRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const { db } = ctx;
       const { postId } = input;
-
       const postDetail = await db.post.findUnique({
         where: {
           id: postId,
@@ -90,9 +86,8 @@ export const postRouter = createTRPCRouter({
       const posts = await db.post.findMany({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
-        orderBy: {
-          createdAt: "desc",
-        },
+        skip: cursor ? 1 : undefined,
+        orderBy: { createdAt: "desc" },
         select: {
           id: true,
           description: true,
@@ -105,31 +100,27 @@ export const postRouter = createTRPCRouter({
           },
           createdAt: true,
           answeredAt: true,
-          _count: {
-            select: {
-              answers: true
-            }
-          }
+          _count: { select: { answers: true } },
         },
       });
 
-      // kirim cursor berikutnya ke frontend
       let nextCursor: string | undefined = undefined;
       if (posts.length > limit) {
         const nextItem = posts.pop();
         nextCursor = nextItem?.id;
       }
-      
-      const formattedPosts = posts.map(post => ({
-        ...post,
-        totalComments: post._count.answers
+
+      const formattedPosts = posts.map(p => ({
+        ...p,
+        totalComments: p._count.answers,
       }));
-      
+
       return {
-        posts,
+        posts: formattedPosts,
         nextCursor,
-      }
+      };
     }),
+
   markAsAnswered: protectedProcedure
     .input(
       z.object({
@@ -138,7 +129,6 @@ export const postRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const { db, session } = ctx;
-
       const updatedPost = await db.post.update({
         where: {
           id: input.postId,
