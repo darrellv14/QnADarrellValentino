@@ -27,7 +27,7 @@ import { signIn, useSession } from "next-auth/react";
 
 const createPostFormSchema = z.object({
   title: z.string().min(10, "Tanya yg bener woi!").max(100, "Maksimum 100 huruf aja wok!"),
-  description: z.string().max(1000, "Gausah nyepam kocak"),
+  description: z.string().min(50, "dikit amat nanya nya!").max(1000, "Gausah nyepam kocak"),
 });
 
 type CreatePostFormSchema = z.infer<typeof createPostFormSchema>;
