@@ -14,28 +14,41 @@ type PostCardProps = {
   isAnswered: boolean;
 };
 
-export const PostCard = (props: PostCardProps) => {
-  const postDetailUrl = "/post/" + props.id;
+export const PostCard = ({
+  id,
+  userImage,
+  username,
+  createdDate,
+  title,
+  description,
+  totalComments,
+  isAnswered,
+}: PostCardProps) => {
+  const postDetailUrl = `/post/${id}`;
+
   return (
     <div className="space-y-4 rounded-xl border p-6 shadow">
       <div className="flex justify-between">
         <div className="flex items-center gap-3">
           <Avatar className="size-14">
-            <AvatarImage src={props.userImage} />
-            <AvatarFallback>
-              {props.username.charAt(0).toUpperCase()}
-            </AvatarFallback>
+            <AvatarImage src={userImage} />
+            <AvatarFallback>{username.charAt(0).toUpperCase()}</AvatarFallback>
           </Avatar>
           <div className="space-y-0.5">
-            <Link href={"/profile/" + props.username}>
-              <p className="font-medium">{props.username?.slice(0, 13)}</p>
+            <Link href={`/profile/${username}`}>
+              <p
+                className="inline-block max-w-[13ch] truncate font-medium md:max-w-none"
+                title={username}
+              >
+                {username}
+              </p>
             </Link>
-            <p className="text-muted-foreground text-sm">
-              {props.createdDate.toLocaleDateString()}
+            <p className="text-sm text-muted-foreground">
+              {createdDate.toLocaleDateString()}
             </p>
           </div>
         </div>
-        {props.isAnswered ? (
+        {isAnswered ? (
           <Badge variant="default" className="h-fit">
             Answered
           </Badge>
@@ -45,19 +58,21 @@ export const PostCard = (props: PostCardProps) => {
           </Badge>
         )}
       </div>
+
       <Link href={postDetailUrl} className="group">
         <div className="space-y-1">
-          <h3 className="group-hover:text-primary text-lg font-semibold">
-            {props.title}
+          <h3 className="text-lg font-semibold group-hover:text-primary">
+            {title}
           </h3>
-          <p className="text-sm">{props.description}</p>
+          <p className="text-sm">{description}</p>
         </div>
       </Link>
+
       <div className="mt-4 flex justify-between border-t pt-3">
-        <div className="text-muted-foreground flex gap-1 text-sm">
-          <MessageSquareMore className="size-4" /> {props.totalComments} Comments
+        <div className="flex gap-1 text-sm text-muted-foreground">
+          <MessageSquareMore className="size-4" /> {totalComments} Comments
         </div>
-        <Link href={postDetailUrl} className="text-primary text-sm">
+        <Link href={postDetailUrl} className="text-sm text-primary">
           View Post
         </Link>
       </div>
