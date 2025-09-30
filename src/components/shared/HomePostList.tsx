@@ -36,7 +36,7 @@ export const HomePostList = () => {
                 description={post.description}
                 title={post.title}
                 isAnswered={Boolean(post.answeredAt)}
-                totalComments={0}
+                totalComments={post.totalComments}
                 username={post.author.username ?? ""}
                 userImage={post.author.image ?? ""}
                 key={post.id}
