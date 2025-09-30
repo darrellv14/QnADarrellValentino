@@ -11,14 +11,13 @@ type PostCardProps = {
   title: string;
   description: string;
   totalComments: number;
-  status: "ANSWERED" | "UNANSWERED";
+  isAnswered: boolean;
 };
 
 export const PostCard = (props: PostCardProps) => {
   const postDetailUrl = "/post/" + props.id;
   return (
     <div className="space-y-4 rounded-xl border p-6 shadow">
-      {/* Header */}
       <div className="flex justify-between">
         <div className="flex items-center gap-3">
           <Avatar className="size-14">
@@ -27,7 +26,6 @@ export const PostCard = (props: PostCardProps) => {
               {props.username.charAt(0).toUpperCase()}
             </AvatarFallback>
           </Avatar>
-
           <div className="space-y-0.5">
             <Link href={"/profile/" + props.username}>
               <p className="font-medium">{props.username}</p>
@@ -37,18 +35,16 @@ export const PostCard = (props: PostCardProps) => {
             </p>
           </div>
         </div>
-        {props.status === "UNANSWERED" ? (
-          <Badge variant="secondary" className="h-fit">
-            Unanswered
-          </Badge>
-        ) : (
+        {props.isAnswered ? (
           <Badge variant="default" className="h-fit">
             Answered
           </Badge>
+        ) : (
+          <Badge variant="secondary" className="h-fit">
+            Unanswered
+          </Badge>
         )}
       </div>
-
-      {/* Content */}
       <Link href={postDetailUrl} className="group">
         <div className="space-y-1">
           <h3 className="group-hover:text-destructive text-lg font-semibold">
@@ -57,12 +53,9 @@ export const PostCard = (props: PostCardProps) => {
           <p className="text-sm">{props.description}</p>
         </div>
       </Link>
-
-      {/* Footer */}
       <div className="mt-4 flex justify-between border-t pt-3">
         <div className="text-muted-foreground flex gap-1 text-sm">
-          <MessageSquareMore className="size-4" /> {props.totalComments}{" "}
-          Comments
+          <MessageSquareMore className="size-4" /> {props.totalComments} Comments
         </div>
         <Link href={postDetailUrl} className="text-primary text-sm">
           View Post
